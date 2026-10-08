@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rpp-rpm-generator"
+version = "2.0.0"
+description = "AI RPP/RPM Generator - Pembelajaran Mendalam untuk sekolah dan madrasah Indonesia"
+requires-python = ">=3.10"
+readme = "README.md"
+dependencies = [
+    "Flask>=3.0.0",
+    "Flask-CORS>=4.0.0",
+    "PyPDF2>=4.0.0",
+    "pdfplumber>=0.11.10",
+    "PyMuPDF>=1.27.2",
+    "pytesseract>=0.3.13",
+    "Pillow>=12.3.0",
+    "python-docx>=0.8.11",
+    "python-dotenv>=1.0.1",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.3",
+    "pytest-cov>=4.1.0",
+    "pytest-xdist>=3.8.0",
+    "black>=23.12.0",
+    "flake8>=6.1.0",
+    "mypy>=1.7.1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short --strict-markers -p no:asyncio"
+console_output_style = "progress"
+markers = [
+    "curriculum: tests for curriculum engine",
+    "rules: tests for rule engine",
+    "context: tests for curriculum context",
+    "validators: tests for validation logic",
+    "database: tests for database operations",
+    "antislop: tests for anti-slop protection",
+    "api: tests for Flask API",
+    "integration: integration tests",
+    "phase_c: Phase C module generation pipeline tests",
+    "slow: rebuild penuh dari PDF, jalan hanya bila diminta eksplisit",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py310', 'py311']
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false

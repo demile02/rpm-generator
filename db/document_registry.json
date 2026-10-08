@@ -1,0 +1,314 @@
+{
+  "documents": [
+    {
+      "id": "REG-KEMENDIKDASMEN-010-2025",
+      "title": "Permendikdasmen Nomor 10 Tahun 2025",
+      "document_type": "regulation",
+      "authority": "KEMENDIKDASMEN",
+      "regulation_type": "Peraturan Menteri",
+      "regulation_number": "10",
+      "year": 2025,
+      "effective_date": "2025-06-13",
+      "effective_evidence": {
+        "effective_date_basis": "Pasal 13: mulai berlaku pada tanggal diundangkan (p11); diundangkan 13 Juni 2025 (p12).",
+        "evidence_page": 12,
+        "evidence_date": "2025-06-13"
+      },
+      "status": "active",
+      "supersedes_id": null,
+      "supersedes_kind": null,
+      "description": "Standar Kompetensi Lulusan - dasar 8 Dimensi Profil Lulusan",
+      "scope": [
+        "SD",
+        "SMP",
+        "SMA",
+        "SMK"
+      ],
+      "usage": [
+        "graduation_profile",
+        "profile_dimensions_8"
+      ],
+      "source_url": null,
+      "local_path": "Hukum/Permendikdasmen No. 10 Tahun 2025.pdf",
+      "document_hash": "207a66b76105aa3a180b6e50213be8ef44df15ff040efbcdb6305be86f7ae5b4",
+      "file_size_bytes": 143094,
+      "notes": "Sumber 8 Dimensi Profil Lulusan. Dimensi tidak boleh diganti Panca Cinta."
+    },
+    {
+      "id": "REG-KEMENDIKDASMEN-012-2025",
+      "title": "Permendikdasmen Nomor 12 Tahun 2025",
+      "document_type": "regulation",
+      "authority": "KEMENDIKDASMEN",
+      "regulation_type": "Peraturan Menteri",
+      "regulation_number": "12",
+      "year": 2025,
+      "effective_date": "2025-07-15",
+      "effective_evidence": {
+        "effective_date_basis": "Pasal 9: mulai berlaku pada tanggal diundangkan; diundangkan 15 Juli 2025.",
+        "evidence_page": 5,
+        "evidence_date": "2025-07-15"
+      },
+      "status": "active",
+      "supersedes_id": null,
+      "supersedes_kind": null,
+      "description": "Standar Isi - ruang lingkup materi dan landasan isi pembelajaran",
+      "scope": [
+        "SD",
+        "SMP",
+        "SMA",
+        "SMK"
+      ],
+      "usage": [
+        "content_standard"
+      ],
+      "source_url": null,
+      "local_path": "Hukum/Permendikdasmen No. 12 Tahun 2025.pdf",
+      "document_hash": "184497add24f2baaf72e94d1fddfd842d1e3656d8bb37bb222bd41eaa7dbdd16",
+      "file_size_bytes": 388168,
+      "notes": "Bukan pengganti dokumen CP mata pelajaran."
+    },
+    {
+      "id": "REG-KEMENDIKDASMEN-013-2025",
+      "title": "Permendikdasmen Nomor 13 Tahun 2025",
+      "document_type": "regulation",
+      "authority": "KEMENDIKDASMEN",
+      "regulation_type": "Peraturan Menteri",
+      "regulation_number": "13",
+      "year": 2025,
+      "effective_date": "2025-07-11",
+      "effective_evidence": {
+        "effective_date_basis": "Pasal II: mulai berlaku pada tanggal diundangkan; ditetapkan 11 Juli 2025 (p6).",
+        "evidence_page": 6,
+        "evidence_date": "2025-07-11"
+      },
+      "status": "active",
+      "supersedes_id": null,
+      "supersedes_kind": null,
+      "description": "Perubahan atas regulasi kurikulum; kerangka dasar kurikulum; pendekatan Pembelajaran Mendalam",
+      "scope": [
+        "PAUD",
+        "SD",
+        "SMP",
+        "SMA",
+        "SMK"
+      ],
+      "usage": [
+        "curriculum_framework",
+        "deep_learning_approach"
+      ],
+      "source_url": null,
+      "local_path": "Hukum/Permendikdasmen No. 13 Tahun 2025.pdf",
+      "document_hash": "8153c74577d0b7a9f2dfc7f41d3096bc0882d796cc2f26ddea5f6c0d80f44c7a",
+      "file_size_bytes": 1661444,
+      "notes": "Mengubah Permedikdasmen 032/2024 (di luar set Hukum/)."
+    },
+    {
+      "id": "REG-KEMENDIKDASMEN-001-2026",
+      "title": "Permendikdasmen Nomor 1 Tahun 2026",
+      "document_type": "regulation",
+      "authority": "KEMENDIKDASMEN",
+      "regulation_type": "Peraturan Menteri",
+      "regulation_number": "1",
+      "year": 2026,
+      "effective_date": "2026-01-02",
+      "effective_evidence": {
+        "effective_date_basis": "Pasal 21: mulai berlaku pada tanggal diundangkan; ditetapkan 2 Januari 2026 (p9).",
+        "evidence_page": 9,
+        "evidence_date": "2026-01-02"
+      },
+      "status": "active",
+      "supersedes_id": null,
+      "supersedes_kind": null,
+      "description": "Standar Proses - perencanaan, pelaksanaan, dan penilaian proses pembelajaran",
+      "scope": [
+        "SD",
+        "SMP",
+        "SMA",
+        "SMK"
+      ],
+      "usage": [
+        "process_standard",
+        "lesson_planning"
+      ],
+      "source_url": null,
+      "local_path": "Hukum/Permendikdasmen No. 1 Tahun 2026.pdf",
+      "document_hash": "4438bf42fe4c5624cea5514284fb08a68fbd44b91860b82fff102ebbd452b857",
+      "file_size_bytes": 1443190,
+      "notes": "Komponen minimal perencanaan: tujuan, langkah, asesmen."
+    },
+    {
+      "id": "REG-KEMENDIKDASMEN-BSKAP-046-2025",
+      "title": "Kepka BSKAP Nomor 046/H/KR/2025",
+      "document_type": "regulation",
+      "authority": "KEMENDIKDASMEN",
+      "regulation_type": "Keputusan Kepala Badan",
+      "regulation_number": "046/H/KR/2025",
+      "year": 2025,
+      "effective_date": "2025-07-16",
+      "effective_evidence": {
+        "effective_date_basis": "KEDUA BELAS/KEDELAPAN: mulai berlaku sejak tanggal ditetapkan; ditetapkan 16 Juli 2025.",
+        "evidence_page": 6,
+        "evidence_date": "2025-07-16"
+      },
+      "status": "active",
+      "supersedes_id": null,
+      "supersedes_kind": null,
+      "description": "Capaian Pembelajaran mata pelajaran pendidikan dasar dan menengah (CP nasional)",
+      "scope": [
+        "SD",
+        "SMP",
+        "SMA",
+        "SMK"
+      ],
+      "usage": [
+        "learning_outcomes_national"
+      ],
+      "source_url": null,
+      "local_path": "Hukum/Kepka BSKAP No.046_H_KR_2025.pdf",
+      "document_hash": "45809d2c88a612f90ee5adbd60d71a8952527d6924c626d126ea6926ae3d3394",
+      "file_size_bytes": 14908908,
+      "notes": "Sumber CP nasional. Bagian CP Pendidikan Agama dan Budi Pekerti DIUBAH oleh BKPDM 020/2026; mapel lain tetap mengikuti dokumen ini."
+    },
+    {
+      "id": "REG-KEMENDIKDASMEN-BKPDM-020-2026",
+      "title": "BKPDM Nomor 020 Tahun 2026",
+      "document_type": "regulation",
+      "authority": "KEMENDIKDASMEN",
+      "regulation_type": "Keputusan Kepala Badan",
+      "regulation_number": "020",
+      "year": 2026,
+      "effective_date": "2026-06-11",
+      "effective_evidence": {
+        "effective_date_basis": "Keputusan ini mulai berlaku pada tanggal ditetapkan; ditetapkan 11 Juni 2026 (p3).",
+        "evidence_page": 3,
+        "evidence_date": "2026-06-11"
+      },
+      "status": "active",
+      "supersedes_id": "REG-KEMENDIKDASMEN-BSKAP-046-2025",
+      "supersedes_kind": "amends",
+      "description": "Perubahan Capaian Pembelajaran Pendidikan Agama dan Budi Pekerti serta Pendidikan Khusus Pendidikan Agama dan Budi Pekerti pada CP nasional BSKAP 046/H/KR/2025 (Lampiran II dan Lampiran V)",
+      "scope": [
+        "SD",
+        "SMP",
+        "SMA",
+        "SMK",
+        "SDLB",
+        "SMPLB",
+        "SMALB"
+      ],
+      "usage": [
+        "learning_outcomes_pai_bp_amendment",
+        "learning_outcomes_pendidikan_khusus_pab"
+      ],
+      "source_url": null,
+      "local_path": "Hukum/BKPDM No. 020 Tahun 2026.pdf",
+      "document_hash": "598278746b0f62333fdcab520d5dd4c1a9650c94bd3906acff4254100976552b",
+      "file_size_bytes": 8510107,
+      "notes": "Memuat CP Pendidikan Agama dan Budi Pekerti (reguler) serta CP Pendidikan Khusus Pendidikan Agama dan Budi Pekerti Kemendikdasmen (KESATU, hlm. 3; Lampiran II dan Lampiran V). 046/H/KR/2025 tetap berlaku untuk mapel lain; relasi ini amendemen, bukan penggantian total."
+    },
+    {
+      "id": "REG-KEMENAG-1503-2025",
+      "title": "KMA Nomor 1503 Tahun 2025",
+      "document_type": "regulation",
+      "authority": "KEMENAG",
+      "regulation_type": "Keputusan Menteri Agama",
+      "regulation_number": "1503",
+      "year": 2025,
+      "effective_date": "2025-09-22",
+      "effective_evidence": {
+        "effective_date_basis": "Keputusan ini mulai berlaku pada tanggal ditetapkan; ditetapkan 22 September 2025.",
+        "evidence_page": 5,
+        "evidence_date": "2025-09-22"
+      },
+      "status": "active",
+      "supersedes_id": null,
+      "supersedes_kind": null,
+      "description": "Pedoman implementasi kurikulum madrasah (RA, MI, MTs, MA, MAK); Pembelajaran Mendalam dan KBC",
+      "scope": [
+        "RA",
+        "MI",
+        "MTs",
+        "MA",
+        "MAK"
+      ],
+      "usage": [
+        "madrasah_curriculum_framework",
+        "kbc_context"
+      ],
+      "source_url": null,
+      "local_path": "Hukum/KMA No. 1503 Tahun 2025.pdf",
+      "document_hash": "139b5b32c2c2fa0cbb11b861a37b8804187bd78d51f016963c65baf0812ba7e5",
+      "file_size_bytes": 39665491,
+      "notes": "Payung kurikulum madrasah; CP PAI/BA tetap dari 9941/2025."
+    },
+    {
+      "id": "REG-KEMENAG-PENDIS-9941-2025",
+      "title": "Kepdirjen Pendis Nomor 9941 Tahun 2025",
+      "document_type": "regulation",
+      "authority": "KEMENAG",
+      "regulation_type": "Keputusan Direktur Jenderal",
+      "regulation_number": "9941",
+      "year": 2025,
+      "effective_date": "2025-11-28",
+      "effective_evidence": {
+        "effective_date_basis": "KETIGA: mulai berlaku pada tanggal ditetapkan; ditetapkan 28 November 2025.",
+        "evidence_page": 4,
+        "evidence_date": "2025-11-28"
+      },
+      "status": "active",
+      "supersedes_id": null,
+      "supersedes_kind": null,
+      "description": "Capaian Pembelajaran PAI dan Bahasa Arab madrasah (RA, MI, MTs, MA/MAK, termasuk MAPK)",
+      "scope": [
+        "RA",
+        "MI",
+        "MTs",
+        "MA",
+        "MAK"
+      ],
+      "usage": [
+        "learning_outcomes_pai_ba_madrasah"
+      ],
+      "source_url": null,
+      "local_path": "Hukum/Kepdirjen Pendis No. 9941 Tahun 2025.pdf",
+      "document_hash": "81f64e3fc80f50ceb0128b3a2747bdffcb880650a1a437e0bcc88cb715e4708b",
+      "file_size_bytes": 867593,
+      "notes": "Sumber CP Al-Qur'an Hadis, Akidah Akhlak, Fikih, SKI, Bahasa Arab; bagian MAPK terpisah dari jalur reguler."
+    },
+    {
+      "id": "GUIDE-KEMENAG-KBC-6077-2025",
+      "title": "Kepdirjen Pendis Nomor 6077 Tahun 2025 - Panduan Kurikulum Berbasis Cinta",
+      "document_type": "guide",
+      "authority": "KEMENAG",
+      "regulation_type": "Panduan (Kepdirjen Pendis)",
+      "regulation_number": "6077",
+      "year": 2025,
+      "effective_date": "2025-07-22",
+      "effective_evidence": {
+        "effective_date_basis": "Dokumen panduan; tanggal penetapan 22 Juli 2025 (p3).",
+        "evidence_page": 3,
+        "evidence_date": "2025-07-22"
+      },
+      "status": "active",
+      "supersedes_id": null,
+      "supersedes_kind": null,
+      "description": "Panduan Kurikulum Berbasis Cinta (KBC): Panca Cinta, strategi integrasi, contoh rancangan",
+      "scope": [
+        "RA",
+        "MI",
+        "MTs",
+        "MA",
+        "MAK"
+      ],
+      "usage": [
+        "kbc_guide",
+        "panca_cinta"
+      ],
+      "source_url": null,
+      "local_path": "Hukum/Kepdirjen Pendis No. 6077 Tahun 2025.pdf",
+      "document_hash": "688f7c1f40436d2464b7590a871c1d72130915e69236ef95e8b335b087469d54",
+      "file_size_bytes": 2635434,
+      "notes": "Acuan integrasi KBC; contoh dalam panduan bukan template wajib. Panca Cinta bukan pengganti 8 Dimensi Profil Lulusan."
+    }
+  ]
+}

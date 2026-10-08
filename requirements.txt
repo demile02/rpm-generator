@@ -1,0 +1,41 @@
+# RPP/RPM Generator (Pembelajaran Mendalam) - Dependencies
+# Install: python3 -m pip install -r requirements.txt
+# Update floor bersama pyproject.toml [project] dependencies.
+# Core web framework
+Flask==3.0.0
+Flask-CORS==4.0.0
+
+# Testing framework
+pytest==7.4.3
+pytest-cov==4.1.0
+# Parallel test execution (dev/test only; never production runtime):
+# pytest -n auto  (Batch 6)
+pytest-xdist==3.8.0
+
+# PDF processing (text layer + fallback OCR/vision utk PDF scan)
+PyPDF2==4.0.0
+pdfplumber==0.11.10
+PyMuPDF==1.27.2
+# OCR fallback utk halaman PDF scan (BKPDM 020/2026, KMA 1503/2025):
+# butuh binary Tesseract + tessdata "ind" (db/tessdata/).
+pytesseract==0.3.13
+# OCR render (dipakai langsung oleh src/pdf_extraction.py via PIL.Image)
+Pillow==12.3.0
+
+# Data processing (python-docx>=0.8.11 butuh lxml>=4.x; lxml ikut
+# sebagai dependensi transitif python-docx, tidak perlu pin eksplisit)
+python-docx==0.8.11
+
+# Environment file support (.env untuk self-host)
+python-dotenv==1.0.1
+
+# Type hints (untuk Python < 3.10; floor proyek >=3.10 jadi opsional)
+typing-extensions==4.8.0
+
+# Development tools (optional but recommended)
+black==23.12.0
+flake8==6.1.0
+mypy==1.7.1
+
+# Additional utilities
+requests==2.31.0

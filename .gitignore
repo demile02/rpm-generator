@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+# Linux venv (besar, dibuat ulang via pip install)
+.venv-linux/
+
+# Test & tooling artifacts
+.pytest_cache/
+.mypy_cache/
+artifacts/
+*.log
+junit_*.xml
+# Coverage
+.coverage
+coverage.xml
+htmlcov/
+# Build / packaging
+build/
+dist/
+# Node (uji frontend ui/tests/)
+node_modules/
+# Agent workspace (tidak di-commit)
+.agents/
+
+# Runtime state
+*.pid
+start_pid.txt
+# Environment with secrets (never commit)
+.env
+.env.*
+!.env.example
+# Throwaway DB copy for the mock preview server (scripts/mock_preview_server.py)
+db/mock_rpm.db
+
+# IDE / tooling workspace state
+.freebuff/
+.kiro/
+.claude/
+
+# Local-only investigation, backups, working copies (never commit)
+audit/
+backup/
+templates/_backup/
+templates/uploads contoh/
+*.bak
+*.tmp
+# User-uploaded book files (R-43 upload, runtime data — never commit)
+db/source_documents/

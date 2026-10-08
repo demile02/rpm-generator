@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RPM, Generator Rencana Pembelajaran Mendalam</title>
+<link rel="stylesheet" href="/app/styles.css?v=restr2">
+<script src="/app/vendor-tailwind.js"></script>
+<script>
+/* Token Atelier Glass (Design.md) untuk utility Tailwind. */
+tailwind.config = {
+  theme: { extend: { colors: {
+    primary: '#3d3a8a', primaryhover: '#343276', accentink: '#f4f2fb',
+    pagebg: '#eeeaf5', lifted: '#e6e3f0',
+    text1: '#1a1830', text2: '#666581', bord: 'rgba(26,24,48,0.10)',
+    galat: '#991B1B'
+  }, fontFamily: {
+    display: ['Spectral', 'Georgia', 'serif'],
+    body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+    mono: ['"JetBrains Mono"', 'monospace']
+  } } }
+};
+</script>
+<script defer src="/app/vendor-alpine.js"></script>
+</head>
+<body x-data="rpmModal()" @keydown.escape.window="escapeTop()">
+<script>
+/* Store modal Alpine: ganti hidden-toggle manual (R-26). Vanilla
+   bukaModal/tutupModal tetap sinkron dua arah via ModalUI. */
+function rpmModal() {
+  return {
+    buka: {},
+    open(id) { this.buka[id] = true; },
+    close(id) { this.buka[id] = false; },
+    lihat(id) { return !!this.buka[id]; },
+    escapeTop() {
+      var ids = Object.keys(this.buka).filter((k) => this.buka[k]);
+      if (!ids.length) return;
+      var atas = ids[ids.length - 1];
+      if (window.ModalUI && window.ModalUI.minta) {
+        window.ModalUI.minta(atas);
+      }
+    }
+  };
+}
+</script>
+<a class="lewati" href="#konten">Lewati ke konten</a>
+<header class="topbar">
+  <div class="wrap topbar__inner">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">RPM</span>
+      <span class="brand__text">
+        <strong>Generator RPM</strong>
+        <small>Rencana Pembelajaran Mendalam</small>
+      </span>
+    </div>
+    <button type="button" id="btn-menu-nav" aria-expanded="false" aria-controls="nav-utama" aria-label="Buka menu navigasi">
+      <span class="garis" aria-hidden="true"></span>
+    </button>
+    <nav class="topbar__nav" id="nav-utama" aria-label="Navigasi utama">
+      <a href="#layar-beranda">Beranda</a>
+      <a href="#layar-arsip">Arsip</a>
+      <button type="button" id="btn-buka-log" class="navlink">Log</button>
+      <a href="#layar-formulir" id="link-buat-rpm">Buat RPM</a>
+      <button type="button" id="btn-finalize" class="btn btn--aksi" hidden>Simpan perubahan</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="konten">
+  <!-- 0. Landing (entry) -->
+  <section id="layar-landing" class="screen" aria-labelledby="judul-landing">
+    <div class="hero">
+      <div class="hero__utama">
+        <p class="kicker">Perencanaan pembelajaran berbasis kurikulum nasional</p>
+        <h1 id="judul-landing">Susun RPM dari CP resmi, <em>tervalidasi</em> berlapis.</h1>
+        <p class="lede">Generator RPM menyusun Rencana Pembelajaran Mendalam dari Capaian Pembelajaran resmi. Setiap RPM melewati validasi berlapis sebelum dapat diekspor sebagai DOCX.</p>
+        <div class="form__actions">
+          <a class="btn btn--aksi" href="#layar-formulir">Buat RPM
+            <span class="btn__chip" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+          </a>
+          <a class="btn btn--ghost" href="#layar-beranda">Beranda</a>
+        </div>
+      </div>
+      <dl class="hero__stats" id="stat-kurikulum">
+        <div><dt>Entri CP resmi</dt><dd data-stat="cp">…</dd></div>
+        <div><dt>Dokumen regulasi</dt><dd data-stat="dokumen">…</dd></div>
+        <div><dt>Fragmen sumber</dt><dd data-stat="fragmen">…</dd></div>
+      </dl>
+    </div>
+    <div class="fitur">
+      <div class="fitur__kepala">
+        <h2>Dibangun untuk cara kerja <em>guru</em></h2>
+        <p class="lede">Setiap kemampuan di bawah ini terhubung ke data atau alur yang benar-benar ada di aplikasi.</p>
+      </div>
+      <ul class="fitur__grid">
+        <li><span class="nomor" aria-hidden="true">01</span><strong>CP resmi</strong><span>Dipilih sistem dari dokumen regulasi, bukan karangan AI</span></li>
+        <li><span class="nomor" aria-hidden="true">02</span><strong>Validasi berlapis</strong><span>CP, struktur, aturan, pedagogis, hingga final</span></li>
+        <li><span class="nomor" aria-hidden="true">03</span><strong>KBC madrasah</strong><span>Integrasi Kurikulum Berbasis Cinta yang relevan</span></li>
+        <li><span class="nomor" aria-hidden="true">04</span><strong>Riwayat versi</strong><span>Setiap perubahan tersimpan dan dapat dibuka kembali</span></li>
+        <li><span class="nomor" aria-hidden="true">05</span><strong>Ekspor DOCX</strong><span>Dokumen rapi mengikuti templat sekolah/madrasah</span></li>
+        <li><span class="nomor" aria-hidden="true">06</span><strong>Kesiapan murid</strong><span>Observasi guru dipakai apa adanya, tanpa diagnosis karangan</span></li>
+      </ul>
+    </div>
+    <div class="langkah">
+      <h2>Alur kerja</h2>
+      <ol class="alur">
+        <li><strong>Konteks</strong><span>Sistem, jenjang, kelas, mapel, topik</span></li>
+        <li><strong>Generate</strong><span>AI menyusun TP, kegiatan, asesmen</span></li>
+        <li><strong>Validasi</strong><span>CP, struktur, aturan, pedagogis, final</span></li>
+        <li><strong>Ekspor</strong><span>DOCX siap dipakai guru</span></li>
+      </ol>
+      <div class="form__actions">
+        <a class="btn btn--aksi" href="#layar-formulir">Buat RPM</a>
+        <a class="btn" href="#layar-beranda">Beranda</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. Beranda (dashboard: profil + riwayat RPM) -->
+  <section id="layar-beranda" class="screen" aria-labelledby="judul-beranda" hidden>
+    <p class="kicker">Dashboard</p>
+    <h1 id="judul-beranda">RPM <em>Anda</em></h1>
+    <div class="profil" aria-labelledby="judul-profil-beranda">
+      <div class="profil__identitas">
+        <h2 id="judul-profil-beranda">Profil</h2>
+        <dl class="identitas profil__data" id="profil-ringkas"></dl>
+      </div>
+      <div class="form__actions profil__aksi">
+        <button type="button" id="btn-ubah-profil" class="btn btn--tenang">Ubah Profil</button>
+      </div>
+    </div>
+    <div class="kepala-bagian">
+      <h2>Koleksi Buku Ajar</h2>
+    </div>
+    <div class="kartu-bagian" aria-label="Koleksi buku ajar">
+      <div class="form__actions profil__aksi">
+        <button type="button" id="btn-upload-buku" class="btn">Tambah buku</button>
+        <input id="f-buku-file" type="file" accept=".pdf,.docx" hidden>
+      </div>
+      <p id="buku-error" class="error" role="alert" hidden></p>
+      <p id="buku-hasil" class="meta" role="status" hidden></p>
+      <ul id="koleksi-buku" class="riwayat"></ul>
+      <p id="koleksi-buku-kosong" class="lede" hidden>Belum ada buku. Upload PDF/DOCX di atas.</p>
+    </div>
+    <div class="kepala-bagian">
+      <h2>Riwayat RPM</h2>
+      <div class="form__actions profil__aksi">
+        <button type="button" id="btn-buka-upload" class="btn">Impor RPM</button>
+        <input type="file" id="upload-file" accept=".docx,.pdf" hidden>
+      </div>
+    </div>
+    <div id="upload-error" class="error" role="alert" hidden></div>
+    <div id="upload-hasil" class="meta" role="status" hidden></div>
+    <div class="kartu-bagian" aria-label="Daftar riwayat RPM">
+      <div id="riwayat-error" class="error" role="alert" hidden></div>
+      <div id="riwayat-kosong" hidden>
+        <p class="lede">Belum ada RPM tersimpan. Buat RPM pertama Anda.</p>
+        <p><a class="btn btn--aksi" href="#layar-formulir">Buat RPM</a></p>
+      </div>
+      <div class="bulk" id="bulk-kontrol" hidden>
+        <label class="bulk__pilih">
+          <input type="checkbox" id="bulk-pilih">
+          <span>Pilih semua</span>
+        </label>
+        <div class="bulk__bilah" id="bulk-bilah" hidden>
+          <span id="bulk-jumlah" role="status">0 dipilih</span>
+          <button type="button" id="btn-hapus-pilih" class="btn btn--hapus">Hapus</button>
+          <button type="button" id="btn-arsip-pilih" class="btn">Arsipkan</button>
+        </div>
+      </div>
+      <ul id="riwayat-rpm" class="riwayat"></ul>
+      <p id="buka-error" class="error" role="alert" hidden></p>
+    </div>
+  </section>
+
+  <!-- 1b. Arsip (mirror Beranda: pilih + hapus + kembalikan). -->
+  <section id="layar-arsip" class="screen" aria-labelledby="judul-arsip" hidden>
+    <p class="kicker">Penyimpanan</p>
+    <h1 id="judul-arsip">Arsip <em>RPM</em></h1>
+    <p class="lede">RPM yang diarsipkan tetap utuh dan tetap bisa dibuka, diedit, diregenerasi, dan diekspor.</p>
+    <div id="arsip-error" class="error" role="alert" hidden></div>
+    <div id="arsip-kosong" hidden>
+      <p class="lede">Belum ada RPM yang diarsipkan.</p>
+    </div>
+    <div class="bulk" id="arsip-bulk-kontrol" hidden>
+      <label class="bulk__pilih">
+        <input type="checkbox" id="arsip-bulk-pilih">
+        <span>Pilih semua</span>
+      </label>
+      <div class="bulk__bilah" id="arsip-bulk-bilah" hidden>
+        <span id="arsip-bulk-jumlah" role="status">0 dipilih</span>
+        <button type="button" id="btn-kembalikan-pilih" class="btn">Kembalikan</button>
+        <button type="button" id="btn-hapus-arsip-pilih" class="btn btn--hapus">Hapus</button>
+      </div>
+    </div>
+    <ul id="riwayat-arsip" class="riwayat"></ul>
+  </section>
+
+  <!-- Log generate (popup: tidak mengganggu layar aktif). -->
+  <div id="log-overlay" x-show="lihat('log-overlay')" class="overlay" hidden>
+    <div class="dialog dialog--lebar" role="dialog" aria-modal="true"
+         aria-labelledby="judul-log">
+      <h2 id="judul-log">Log</h2>
+      <p class="lede">Riwayat proses generate beserta status dan error tiap tahap.</p>
+      <div id="log-error" class="error" role="alert" hidden></div>
+      <div id="log-kosong" hidden>
+        <p class="lede">Belum ada proses generate tercatat.</p>
+      </div>
+      <div class="bulk" id="log-bulk-kontrol" hidden>
+        <label class="bulk__pilih">
+          <input type="checkbox" id="log-bulk-pilih">
+          <span>Pilih semua</span>
+        </label>
+        <div class="bulk__bilah" id="log-bulk-bilah" hidden>
+          <span id="log-bulk-jumlah" role="status">0 dipilih</span>
+          <button type="button" id="btn-hapus-log-pilih" class="btn btn--hapus">Hapus permanen</button>
+        </div>
+      </div>
+      <ul id="daftar-log" class="riwayat"></ul>
+      <div id="log-detail" class="panel-cp" hidden>
+        <h3 id="log-detail-judul">Detail generate</h3>
+        <p id="log-detail-meta" class="meta"></p>
+        <div id="log-detail-isi"></div>
+        <div class="form__actions">
+          <button type="button" id="btn-tutup-log" class="btn">Tutup detail</button>
+        </div>
+      </div>
+      <div class="form__actions">
+        <button type="button" id="btn-tutup-log-overlay" class="btn btn--aksi">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2-3. Formulir konteks -->
+  <section id="layar-formulir" class="screen" aria-labelledby="judul-formulir" hidden>
+    <p class="kicker">Langkah 1 dari 2, Konteks pembelajaran</p>
+    <h1 id="judul-formulir">Isi konteks <em>pembelajaran</em></h1>
+    <p class="lede">Semua pilihan berasal dari data kurikulum backend, bukan daftar tetap.</p>
+    <ol class="langkah-form" aria-label="Kemajuan pengisian">
+      <li class="aktif" aria-current="step"><span class="nomor" aria-hidden="true">1</span><div><strong>Konteks Pembelajaran</strong><small>Sistem, jenjang, kelas, mapel, topik</small></div></li>
+      <li><span class="nomor" aria-hidden="true">2</span><div><strong>Pendalaman Pengajar</strong><small>Identitas, alokasi, kesiapan murid</small></div></li>
+    </ol>
+    <div id="form-error" class="error" role="alert" hidden></div>
+    <form id="form-konteks" novalidate>
+      <div class="form-kaca" aria-labelledby="judul-grup-konteks">
+        <h3 id="judul-grup-konteks">Konteks Pembelajaran</h3>
+        <p>Dasar kurikulum RPM: sistem, jenjang, dan materi yang diajarkan.</p>
+        <div class="grid-form">
+          <label class="field">Sistem pendidikan
+            <select id="f-sistem" required></select>
+          </label>
+          <label class="field">Jenjang / institusi
+            <select id="f-institusi" required disabled></select>
+          </label>
+          <label class="field">Kelas
+            <select id="f-kelas" required disabled></select>
+          </label>
+          <div class="field">Fase
+            <output id="f-fase" class="fase-output" for="f-kelas"></output>
+          </div>
+          <label class="field">Mata pelajaran
+            <select id="f-mapel" required disabled></select>
+          </label>
+          <label class="field">Elemen <span class="opsional">(opsional)</span>
+            <select id="f-elemen" disabled></select>
+          </label>
+          <label class="field">Buku ajar sumber materi <span class="wajib">(wajib)</span>
+            <select id="f-buku" required></select>
+          </label>
+          <label class="field field--lebar">Topik / konteks pembelajaran
+            <input id="f-topik" type="text" required maxlength="200"
+                   placeholder="mis. Taubat">
+          </label>
+        </div>
+      </div>
+      <div class="form-kaca" aria-labelledby="judul-grup-pendalaman">
+        <h3 id="judul-grup-pendalaman">Pendalaman Pengajar</h3>
+        <p>Identitas pengajar, alokasi waktu, dan kondisi awal murid.</p>
+        <div class="grid-form">
+          <label class="field">Penyusun <span class="opsional">(opsional)</span>
+            <input id="f-penyusun" type="text" maxlength="100"
+                   placeholder="mis. Nama Guru">
+          </label>
+          <label class="field">Satuan pendidikan <span class="opsional">(opsional)</span>
+            <input id="f-satuan" type="text" maxlength="120"
+                   placeholder="mis. MTs Negeri 1">
+          </label>
+          <label class="field">Semester <span class="opsional">(opsional)</span>
+            <select id="f-semester">
+              <option value="">Kosongkan</option>
+              <option value="1">Ganjil</option>
+              <option value="2">Genap</option>
+            </select>
+          </label>
+          <label class="field">Tahun ajaran <span class="opsional">(opsional)</span>
+            <input id="f-tahun" type="text" maxlength="20"
+                   placeholder="mis. 2026/2027">
+          </label>
+          <label class="field">Jumlah pertemuan <span class="wajib">(wajib)</span>
+            <input id="f-jumlah" type="number" required min="1" max="16" value="2">
+          </label>
+          <label class="field">JP per pertemuan <span class="wajib">(wajib)</span>
+            <input id="f-jp" type="number" required min="1" max="10" value="2">
+          </label>
+          <label class="field">Soal asesmen awal <span class="opsional">(default 10)</span>
+            <input id="f-awal" type="number" min="0" max="30" value="10">
+          </label>
+          <label class="field">Soal asesmen formatif <span class="opsional">(default 10)</span>
+            <input id="f-formatif" type="number" min="0" max="30" value="10">
+          </label>
+          <label class="field">Soal asesmen sumatif <span class="opsional">(default 5)</span>
+            <input id="f-sumatif" type="number" min="0" max="30" value="5">
+          </label>
+          <p class="meta">Isi 0 bila jenis asesmen tidak ikut digenerate
+            (bisa digenerate susulan per jenis dari halaman hasil).</p>
+        </div>
+        <label class="field">Kesiapan Murid <span class="opsional">(opsional)</span>
+          <textarea id="f-kesiapan" rows="4" maxlength="2000"
+                    placeholder="Isi kondisi awal berdasarkan observasi/asesmen awal, misalnya: pengetahuan prasyarat; kemampuan awal; miskonsepsi; kebutuhan belajar; kesulitan yang telah diamati. Kosongkan bila data belum tersedia."></textarea>
+        </label>
+      </div>
+      <div class="form__actions">
+        <button type="submit" id="btn-konteks" class="btn btn--aksi">Cek CP &amp; Lanjut</button>
+      </div>
+    </form>
+    <div id="panel-cp" class="panel-cp" hidden>
+      <h3>Capaian Pembelajaran (dari data resmi)</h3>
+      <blockquote id="cp-teks"></blockquote>
+      <p id="cp-meta" class="meta"></p>
+      <div class="form__actions">
+        <button type="button" id="btn-generate" class="btn btn--aksi">Generate RPM</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4-5. Progress generation -->
+  <section id="layar-progres" class="screen" aria-labelledby="judul-progres" hidden>
+    <p class="kicker">Langkah 2 dari 2, Generation</p>
+    <h1 id="judul-progres">Menyusun <em>RPM</em></h1>
+    <p class="lede">Backend menyusun delapan tahap di bawah ini. Anda bisa menunggu, halaman ini memberi kabar tiap menit.</p>
+    <div class="progress" id="progres-bar" role="status" aria-live="polite">
+      <div class="progress__bar" aria-hidden="true"><span></span></div>
+      <p id="progres-teks">Menghubungi backend…</p>
+      <p class="meta">ID generation: <code id="progres-id"></code> · <span id="progres-waktu">0 mnt</span></p>
+    </div>
+    <ol class="tahap" aria-label="Tahap penyusunan RPM">
+      <li><div><strong>Validasi kurikulum</strong><span>CP resmi, fase, dan konteks dicek sebelum AI bekerja</span></div></li>
+      <li><div><strong>Topik</strong><span>Topik pembelajaran dimatangkan dari konteks</span></div></li>
+      <li><div><strong>TP</strong><span>Tujuan pembelajaran disusun dari CP</span></div></li>
+      <li><div><strong>KKTP</strong><span>Kriteria ketercapaian dipasangkan ke tiap TP</span></div></li>
+      <li><div><strong>Materi</strong><span>Bahan ajar diringkas dari sumber materi</span></div></li>
+      <li><div><strong>Aktivitas</strong><span>Langkah per pertemuan disusun dari TP</span></div></li>
+      <li><div><strong>Asesmen</strong><span>Instrumen awal, proses, dan akhir disusun dari TP dan KKTP</span></div></li>
+      <li><div><strong>Outline dan validasi final</strong><span>Seluruh bagian dicek ulang sebelum hasil dibuka</span></div></li>
+    </ol>
+    <div id="progres-error" class="error" role="alert" hidden></div>
+    <div class="form__actions">
+      <button type="button" id="btn-coba-lagi" class="btn btn--aksi" hidden>Coba Lagi</button>
+      <button type="button" id="btn-poll-ulang" class="btn" hidden>Coba polling lagi</button>
+      <button type="button" id="btn-ke-formulir" class="btn">Kembali ke formulir</button>
+    </div>
+  </section>
+
+  <!-- 6-8. Hasil + ekspor -->
+  <section id="layar-hasil" class="screen" aria-labelledby="judul-hasil" hidden>
+    <p class="kicker">Hasil final tervalidasi</p>
+    <h1 id="judul-hasil">Pratinjau <em>RPM</em></h1>
+    <p id="hasil-validasi" class="badge-valid">Final validation: PASS</p>
+    <p id="hasil-versi" class="meta"></p>
+    <p id="hasil-alignment" class="meta"></p>
+    <div class="form__actions" role="group" aria-label="Aksi RPM">
+      <button type="button" id="btn-mode-edit" class="btn">Edit</button>
+      <button type="button" id="btn-simpan-versi" class="btn btn--aksi" hidden>Simpan</button>
+    </div>
+    <p id="status-simpan" class="meta" role="status"></p>
+    <div id="peringatan-dependensi" class="panel-cp" hidden></div>
+    <div class="hasil-badan">
+      <nav id="hasil-toc" class="toc" aria-label="Daftar bagian"></nav>
+      <div class="hasil-dokumen">
+        <article id="hasil-isi" class="dokumen"></article>
+        <div id="editor-isi" class="dokumen" hidden></div>
+      </div>
+    </div>
+    <h2>Riwayat versi</h2>
+    <ul id="riwayat-versi" class="toc"></ul>
+    <div class="form__actions">
+      <button type="button" id="btn-export-docx" class="btn btn--aksi" hidden>Export DOCX</button>
+      <button type="button" id="btn-baru" class="btn">Buat RPM baru</button>
+    </div>
+    <div id="hasil-error" class="error" role="alert" hidden></div>
+  </section>
+
+  <div id="loading-overlay" x-show="lihat('loading-overlay')" class="overlay overlay--loading" hidden>
+    <div class="dialog dialog--loading" role="dialog" aria-modal="true"
+         aria-live="polite" aria-labelledby="loading-judul">
+      <div class="progress__bar loading__bar" aria-hidden="true"><span></span></div>
+      <h2 id="loading-judul">Memproses…</h2>
+      <p id="loading-status" class="meta">Menyiapkan…</p>
+    </div>
+  </div>
+
+  <!-- Overlay simpan lama digabung ke loading-overlay terpusat. -->
+
+  <!-- Profil pengguna (default metadata, localStorage). -->
+  <div id="profil-overlay" x-show="lihat('profil-overlay')" class="overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true"
+         aria-labelledby="judul-profil">
+      <h2 id="judul-profil">Profil Pengguna</h2>
+      <p class="lede">Atur data default yang akan digunakan saat membuat RPM. Data tetap dapat diedit pada formulir.</p>
+      <label class="field">Nama Penyusun
+        <input id="p-penyusun" type="text" maxlength="100"
+               placeholder="Mis. Nama Guru">
+      </label>
+      <label class="field">Satuan Pendidikan
+        <input id="p-satuan" type="text" maxlength="120"
+               placeholder="Mis. MTs Negeri 1">
+      </label>
+      <label class="field">Semester
+        <select id="p-semester">
+          <option value="">Kosongkan</option>
+          <option value="Ganjil">Ganjil</option>
+          <option value="Genap">Genap</option>
+        </select>
+      </label>
+      <label class="field">Tahun Pelajaran
+        <input id="p-tahun" type="text" maxlength="20"
+               placeholder="mis. 2026/2027">
+      </label>
+      <p id="profil-status" class="meta" role="status"></p>
+      <div class="form__actions">
+        <button type="button" id="btn-simpan-profil" class="btn btn--aksi">Simpan Profil</button>
+        <button type="button" id="btn-batal-profil" class="btn">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup alert terpusat: info/sukses/gagal/konfirmasi ringan. -->
+  <div id="alert-overlay" x-show="lihat('alert-overlay')" class="overlay overlay--loading" hidden>
+    <div class="dialog" role="alertdialog" aria-modal="true"
+         aria-labelledby="alert-judul" aria-describedby="alert-pesan">
+      <h2 id="alert-judul">Pemberitahuan</h2>
+      <p id="alert-pesan" class="lede"></p>
+      <div class="form__actions">
+        <button type="button" id="btn-alert-tutup" class="btn btn--aksi">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Konfirmasi hapus RPM terpilih (bulk action riwayat). -->
+  <div id="hapus-overlay" x-show="lihat('hapus-overlay')" class="overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true"
+         aria-labelledby="hapus-judul">
+      <h2 id="hapus-judul">Hapus RPM?</h2>
+      <p class="lede" id="hapus-pesan"></p>
+      <p id="hapus-error" class="error" role="alert" hidden></p>
+      <div class="form__actions">
+        <button type="button" id="btn-konfirmasi-hapus" class="btn btn--hapus">Hapus</button>
+        <button type="button" id="btn-batal-hapus" class="btn">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Konfirmasi hapus permanen baris audit Log. -->
+  <div id="hapus-log-overlay" x-show="lihat('hapus-log-overlay')" class="overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true"
+         aria-labelledby="hapus-log-judul">
+      <h2 id="hapus-log-judul">Hapus log permanen?</h2>
+      <p class="lede" id="hapus-log-pesan"></p>
+      <p id="hapus-log-error" class="error" role="alert" hidden></p>
+      <div class="form__actions">
+        <button type="button" id="btn-konfirmasi-hapus-log" class="btn btn--hapus">Hapus permanen</button>
+        <button type="button" id="btn-batal-hapus-log" class="btn">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Konfirmasi hapus permanen satu riwayat versi. -->
+  <div id="hapus-versi-overlay" x-show="lihat('hapus-versi-overlay')" class="overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true"
+         aria-labelledby="hapus-versi-judul">
+      <h2 id="hapus-versi-judul">Hapus versi?</h2>
+      <p class="lede" id="hapus-versi-pesan"></p>
+      <p id="hapus-versi-error" class="error" role="alert" hidden></p>
+      <div class="form__actions">
+        <button type="button" id="btn-konfirmasi-hapus-versi" class="btn btn--hapus">Hapus permanen</button>
+        <button type="button" id="btn-batal-hapus-versi" class="btn">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Konfirmasi arsipkan RPM terpilih (baris + versi + log utuh). -->
+  <div id="arsip-overlay" x-show="lihat('arsip-overlay')" class="overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true"
+         aria-labelledby="arsip-judul">
+      <h2 id="arsip-judul">Arsipkan RPM?</h2>
+      <p class="lede" id="arsip-pesan"></p>
+      <p id="arsip-error" class="error" role="alert" hidden></p>
+      <div class="form__actions">
+        <button type="button" id="btn-konfirmasi-arsip" class="btn btn--aksi">Arsipkan</button>
+        <button type="button" id="btn-batal-arsip" class="btn">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Konfirmasi kembalikan RPM arsip jadi aktif. -->
+  <div id="kembalikan-overlay" x-show="lihat('kembalikan-overlay')" class="overlay" hidden>
+    <div class="dialog" role="dialog" aria-modal="true"
+         aria-labelledby="kembalikan-judul">
+      <h2 id="kembalikan-judul">Kembalikan RPM?</h2>
+      <p class="lede" id="kembalikan-pesan"></p>
+      <p id="kembalikan-error" class="error" role="alert" hidden></p>
+      <div class="form__actions">
+        <button type="button" id="btn-konfirmasi-kembalikan" class="btn btn--aksi">Kembalikan</button>
+        <button type="button" id="btn-batal-kembalikan" class="btn">Batal</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="app-footer">
+  <p>CP dari dokumen regulasi kanonik; konten pedagogis disusun AI dan lolos validasi berlapis sebelum dapat diekspor.</p>
+</footer>
+
+<!-- Navigasi bawah mobile: 4 tujuan utama, satu jempol. -->
+<nav class="tabbar" aria-label="Navigasi cepat">
+  <a href="#layar-beranda" data-tab="beranda">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+    <span>Beranda</span>
+  </a>
+  <a href="#layar-arsip" data-tab="arsip">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="5" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+    <span>Arsip</span>
+  </a>
+  <a href="#layar-formulir" data-tab="formulir">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+    <span>Buat</span>
+  </a>
+  <button type="button" id="btn-tab-log" data-tab="log">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+    <span>Log</span>
+  </button>
+</nav>
+
+<script>
+/* Menu mobile: toggle nav tanpa menyentuh app.js. */
+try {
+  var _btnMenu = document.getElementById('btn-menu-nav');
+  var _nav = document.getElementById('nav-utama');
+  if (_btnMenu && _nav) {
+    _btnMenu.addEventListener('click', function () {
+      var buka = _nav.classList.toggle('buka');
+      _btnMenu.setAttribute('aria-expanded', buka ? 'true' : 'false');
+      _btnMenu.setAttribute('aria-label', buka ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+    });
+    _nav.addEventListener('click', function (e) {
+      if (e && e.target && e.target.closest && e.target.closest('a,button')) {
+        _nav.classList.remove('buka');
+        _btnMenu.setAttribute('aria-expanded', 'false');
+        _btnMenu.setAttribute('aria-label', 'Buka menu navigasi');
+      }
+    });
+  }
+} catch (_e) { /* abaikan, nav desktop tetap jalan */ }
+</script>
+<script>
+/* Anti-flash pre-boot: tampilkan layar sesuai hash/ generation_id
+   sebelum api.js/render.js/app.js diunduh, agar paint pertama tidak
+   bocor ke landing page saat refresh di layar mana pun. app.js tetap
+   yang mengambil alih penuh lewat route() setelah boot. */
+try {
+  (function () {
+    var hash = window.location.hash || '';
+    var adaGid = /[?&]generation_id=/.test(window.location.search || '');
+    var target = null;
+    if (adaGid) target = 'layar-progres';
+    else if (hash === '#layar-beranda' || hash === '#layar-arsip' ||
+      hash === '#layar-formulir' || hash === '#layar-progres' ||
+      hash === '#layar-hasil') target = hash.slice(1);
+    if (!target) return;
+    ['layar-landing', 'layar-beranda', 'layar-arsip', 'layar-formulir',
+      'layar-progres', 'layar-hasil'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.hidden = (id !== target);
+    });
+  })();
+} catch (_e) { /* abaikan, app.js yang ambil alih */ }
+</script>
+<script src="/app/api.js?v=softly3"></script>
+<script src="/app/render.js?v=ptm1"></script>
+<script src="/app/app.js?v=ptm1"></script>
+</body>
+</html>
