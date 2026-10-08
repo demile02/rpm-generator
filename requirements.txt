@@ -13,7 +13,7 @@ pytest-cov==4.1.0
 pytest-xdist==3.8.0
 
 # PDF processing (text layer + fallback OCR/vision utk PDF scan)
-PyPDF2==4.0.0
+PyPDF2==3.0.1
 pdfplumber==0.11.10
 PyMuPDF==1.27.2
 # OCR fallback utk halaman PDF scan (BKPDM 020/2026, KMA 1503/2025):
