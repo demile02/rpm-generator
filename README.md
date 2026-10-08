@@ -8,6 +8,11 @@ dan setiap RPM melewati validasi berlapis sebelum bisa diekspor DOCX.
 
 Sumber kebenaran spesifikasi: `AGENTS.md`.
 
+## Preview
+
+![Beranda](docs/screenshots/beranda.png)
+![Hasil generate tervalidasi](docs/screenshots/hasil-generate.png)
+
 ## Status data (terverifikasi 2026-10-08)
 
 - 6592 fragmen sumber, 3060 CP, 9 dokumen regulasi
