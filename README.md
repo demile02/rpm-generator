@@ -1,4 +1,4 @@
-# RPM Generator — Rencana Pembelajaran Mendalam
+# RPM Generator: Rencana Pembelajaran Mendalam
 
 Aplikasi pembuat RPP/RPM (Rencana Pembelajaran Mendalam) berbasis AI
 untuk sekolah dan madrasah Indonesia. AI hanya menyusun konten
@@ -22,10 +22,10 @@ sebelum dapat diekspor ke DOCX.
 
 - Python 3.10 atau lebih baru (periksa dengan `python3 --version`)
 - Git
-- Gateway 9Router yang berjalan di `http://localhost:20128` — hanya
-  diperlukan untuk pembuatan RPM baru. Tanpa gateway, aplikasi tetap
-  dapat dibuka dan dipakai untuk melihat riwayat, pratinjau, serta
-  ekspor DOCX.
+- Gateway 9Router yang berjalan di `http://localhost:20128`.
+  Gateway hanya diperlukan untuk pembuatan RPM baru. Tanpa gateway,
+  aplikasi tetap dapat dibuka dan dipakai untuk melihat riwayat,
+  pratinjau, serta ekspor DOCX.
 - (Opsional) `tesseract-ocr` untuk audit kualitas OCR
 - Pustaka Python yang tercantum di `requirements.txt`
 
@@ -42,8 +42,8 @@ cd rpm-generator
 
 Ikuti panduan pemasangan pada https://github.com/decolua/9router
 hingga gateway berjalan di `http://localhost:20128`. Setelah itu,
-buat combo bernama `rpm` di dashboard 9Router — wajib, aplikasi
-tidak bisa generate tanpa combo ini.
+buat combo bernama `rpm` di dashboard 9Router. Combo ini wajib ada,
+aplikasi tidak bisa generate tanpa combo ini.
 
 ### 3. Pasang dependensi Python
 
