@@ -1,1 +1,685 @@
-<!doctype html><title>uji</title>penanda-ghpages-uji
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FDFCF8">
+<title>Progres Produksi</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Reenie+Beanie&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FDFCF8; --ink:#292524; --muted:#78716C; --coral:#FFB7B2;
+    --sage:#E8EFE8; --lav:#EFEDF4; --peach-soft:#FFE4E1; --lav-soft:#E6E6FA;
+    --hair:#F1EDE6; --track:#EFEDF4;
+    --dot-fresh:#2E7D4F; --dot-warn:#A97A08; --dot-stale:#C0353B;
+    --c-coral:#D1554E; --c-sage:#5C7A5E; --c-lav:#6F66A3; --muted-hero:#6E675F;
+    --shadow:0 4px 20px -2px rgba(0,0,0,0.05);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    -webkit-text-size-adjust:100%;
+    -webkit-user-select:none; user-select:none;
+    -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent;
+  }
+  ::selection{background:var(--lav)}
+  .blob{position:fixed; border-radius:50%; filter:blur(60px); opacity:.6; z-index:0; pointer-events:none}
+  .blob.peach{width:340px; height:340px; background:var(--lav-soft); top:-110px; right:-90px}
+  .blob.lav{width:300px; height:300px; background:var(--lav-soft); bottom:-100px; left:-100px}
+  @keyframes floaty{from{transform:translateY(-10px)} to{transform:translateY(10px)}}
+  .blob{animation:floaty 6s ease-in-out infinite alternate}
+  @media (prefers-reduced-motion: reduce){ .blob{animation:none} }
+  .grain{
+    position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.35; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  main{
+    position:relative; z-index:2; max-width:560px; margin:0 auto; min-height:100dvh;
+    display:flex; flex-direction:column; justify-content:center; gap:16px;
+    padding:32px 20px calc(32px + env(safe-area-inset-bottom));
+  }
+  .brand{display:flex; align-items:center; justify-content:center; gap:10px}
+  .logo{flex:none; width:26px; height:26px; border-radius:50%; background:var(--c-lav); position:relative}
+  .logo::after{content:""; position:absolute; width:8px; height:8px; border-radius:50%; background:#fff; top:50%; left:50%; transform:translate(-50%,-50%)}
+  .wordmark{font-family:"Reenie Beanie", cursive; font-size:27px; line-height:1; color:var(--ink)}
+  .brand .cap{font-size:11px; font-weight:600; letter-spacing:.12em; color:var(--muted); text-transform:uppercase}
+  h1{font-size:25px; line-height:1.25; margin:10px 0 0; font-weight:600; letter-spacing:-0.02em; padding-right:48px; overflow-wrap:anywhere}
+  .hero{background:linear-gradient(180deg,#F4F1FA 0%, #EFEDF4 100%); border:1px solid var(--hair); border-radius:32px; box-shadow:var(--shadow); padding:24px}
+  .hero .cap{color:var(--muted-hero)}
+  .hero .fresh{color:var(--muted-hero)}
+  .hero .overall small{color:var(--muted-hero)}
+  .hero .bar{background:#FFFFFF}
+  .hero .fill{background:var(--c-lav)}
+  .hero-top{display:flex; align-items:flex-end; justify-content:space-between; gap:12px}
+  .overall{font-size:clamp(64px, 19vw, 88px); line-height:.95; font-weight:800; letter-spacing:-0.03em; font-variant-numeric:tabular-nums}
+  .overall small{font-size:.35em; font-weight:600; color:var(--muted); letter-spacing:0}
+  .active{text-align:right}
+  .active .cap{font-size:12px; color:var(--muted); margin:0 0 2px}
+  .active .stage-name{font-size:16px; font-weight:700; margin:0}
+  .active .dur-cap{margin-top:12px}
+  .active .dur-val{font-size:16px; font-weight:700; margin:0; font-variant-numeric:tabular-nums}
+  .bar{height:12px; background:var(--track); border-radius:999px; overflow:hidden; margin-top:18px}
+  .fill{height:100%; background:var(--ink); border-radius:999px}
+  .fresh{display:flex; align-items:center; gap:8px; margin-top:16px; font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums}
+  .dot{flex:none; width:9px; height:9px; border-radius:50%; background:var(--dot-fresh)}
+  .dot.warn{background:var(--dot-warn)}
+  .dot.stale{background:var(--dot-stale)}
+  .err{
+    display:none; background:var(--lav); border:1px solid var(--c-lav); color:var(--ink);
+    border-radius:24px; padding:14px 18px; font-size:13px; line-height:1.55;
+  }
+  ul.stages{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px}
+  .stage{background:#fff; border:1px solid var(--hair); border-radius:24px; box-shadow:var(--shadow); padding:18px 20px; cursor:pointer}
+  .stage.current{border:1.5px solid var(--c-lav)}
+  .stage-head{
+    display:flex; align-items:center; width:100%; min-height:44px; padding:0; margin:0;
+    background:none; border:0; cursor:pointer; font:inherit; color:inherit; text-align:left;
+  }
+  .stage-head:focus-visible{outline:1.5px solid var(--ink); outline-offset:4px; border-radius:8px}
+  .stage-head .row{flex:1}
+  .chev{flex:none; margin-left:10px; font-size:13px; color:var(--muted); transition:transform 180ms ease}
+  .chev.open{transform:rotate(180deg)}
+  @media (prefers-reduced-motion: reduce){ .chev{transition:none} }
+  .checks{list-style:none; margin:12px 0 0 36px; padding:0; display:flex; flex-direction:column; gap:7px}
+  .checks li{display:flex; gap:9px; align-items:flex-start; font-size:13.5px; line-height:1.5; color:var(--ink)}
+  .checks .tick{
+    flex:none; width:19px; height:19px; border-radius:50%; background:var(--lav); color:var(--c-lav);
+    font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:1px;
+  }
+  .fam-lav .fill{background:var(--c-lav)}
+  .fam-lav .tick{background:var(--lav); color:var(--c-lav)}
+  .fam-lav .mark.ok{background:var(--lav); color:var(--c-lav); border-color:var(--lav)}
+  .empty-line{font-size:13px; color:var(--muted); margin:12px 0 0 36px}
+  .row{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .left{display:flex; align-items:center; gap:10px; min-width:0}
+  .mark{
+    flex:none; width:26px; height:26px; border-radius:50%; border:2px solid #E9E4DC;
+    display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--ink); background:#fff;
+  }
+  .mark.run{background:var(--c-lav); border-color:var(--c-lav)}
+  .mark.run .in{width:8px; height:8px; border-radius:50%; background:#fff}
+  .mark.ok{background:var(--sage); border-color:var(--sage)}
+  .name{font-size:15.5px; font-weight:700; overflow-wrap:anywhere}
+  .val{font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
+  .val b{color:var(--ink); font-size:15px}
+  .val .done-txt{color:var(--ink); font-weight:700}
+  .detail{font-size:13.5px; color:var(--muted); line-height:1.55; margin:8px 0 0 36px; overflow-wrap:anywhere; font-variant-numeric:tabular-nums}
+  .stage .cap{font-size:11.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:14px 0 0 36px}
+  .meta{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:10px 0 0 36px}
+  .chip{
+    font-size:11px; font-weight:600; padding:4px 10px; border-radius:999px;
+    background:#F4F1FA; color:var(--ink); white-space:nowrap;
+  }
+  .chip.vps{background:var(--lav)}
+  .dur{font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums}
+  .stage .bar{height:8px; margin-top:14px}
+  .note{font-size:13px; color:var(--muted); line-height:1.6; margin:0; overflow-wrap:anywhere}
+  .video-card{background:#fff; border:1px solid var(--hair); border-radius:24px; box-shadow:var(--shadow); padding:18px 20px}
+  .video-card h2{font-size:15.5px; font-weight:700; margin:0 0 4px}
+  .video-card .sub{font-size:13px; color:var(--muted); margin:0 0 14px; line-height:1.55}
+  .vbtns{display:flex; flex-direction:column; gap:10px}
+  .vbtn{
+    display:flex; align-items:center; justify-content:center; min-height:52px; border-radius:999px;
+    font-size:15px; font-weight:700; text-decoration:none; padding:12px 22px; text-align:center;
+  }
+  .vbtn.master{background:var(--ink); color:#fff}
+  .vbtn.plat{background:#fff; color:var(--ink); border:1px solid rgba(41,37,36,0.18)}
+  .vbtn:active{transform:translateY(1px)}
+  .vbtn:focus-visible{outline:1.5px solid var(--ink); outline-offset:4px}
+  .loading{font-size:14px; color:var(--muted); padding:18px 2px}
+  #install{
+    display:none; width:100%; min-height:52px; border-radius:999px; cursor:pointer;
+    background:var(--ink); color:#fff; border:0; font-family:inherit; font-size:15px; font-weight:700; padding:12px 22px;
+  }
+  #install:active{transform:translateY(1px)}
+  #install:focus-visible{outline:1.5px solid var(--ink); outline-offset:4px}
+  #notifyBtn{
+    width:100%; min-height:52px; border-radius:999px; cursor:pointer;
+    background:#fff; color:var(--ink); border:1px solid rgba(41,37,36,0.18);
+    font-family:inherit; font-size:15px; font-weight:700; padding:12px 22px;
+  }
+  #notifyBtn:active{transform:translateY(1px)}
+  #notifyBtn:focus-visible{outline:1.5px solid var(--ink); outline-offset:4px}
+  .notify-hint{font-size:13px; color:var(--muted); line-height:1.55; margin:0; text-align:center}
+  /* Lavender satu tingkat lebih pekat khusus teks di atas --lav: #6F66A3 hanya
+     4,41:1 di atas #EFEDF4 (di bawah AA 4,5), #695FA0 lolos 4,83:1. */
+  :root{ --c-lav-text:#695FA0; }
+  header{position:relative}
+  /* Pemicu riwayat kini ikon di pojok kanan atas kepala papan, bukan tombol
+     besar: glif jam dengan panah putar balik adalah penanda riwayat (R-04),
+     warna --c-lav mengikuti keluarga ungu papan, latar transparan supaya
+     menyatu dengan kepala; area ketuk tetap 44x44 (R-03) dan cincin fokus
+     sama seperti kontrol papan lain (R-32). */
+  #historyBtn{
+    position:absolute; top:-6px; right:0; width:44px; height:44px; padding:0;
+    border:0; border-radius:50%; background:transparent; color:var(--c-lav);
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  #historyBtn:hover{background:var(--lav)}
+  #historyBtn:active{transform:translateY(1px)}
+  #historyBtn:focus-visible{outline:1.5px solid var(--ink); outline-offset:3px}
+  .modal-backdrop{
+    position:fixed; inset:0; z-index:50; background:rgba(41,37,36,.48);
+    display:flex; align-items:flex-end; justify-content:center; padding:12px;
+  }
+  .modal-backdrop[hidden]{display:none}
+  @media (min-width:600px){ .modal-backdrop{align-items:center} }
+  .modal{
+    background:var(--bg); border-radius:28px; box-shadow:var(--shadow);
+    width:100%; max-width:520px; max-height:88dvh; overflow-y:auto;
+    padding:22px 20px calc(20px + env(safe-area-inset-bottom));
+  }
+  .modal-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px}
+  .modal-head h2{font-size:19px; font-weight:700; margin:0}
+  .modal-close{
+    flex:none; width:44px; height:44px; border-radius:50%; border:0; cursor:pointer;
+    background:var(--lav); color:var(--c-lav-text); font-size:16px; font-weight:700; font-family:inherit;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .modal-close:focus-visible{outline:1.5px solid var(--ink); outline-offset:3px}
+  .hist-msg{font-size:14px; color:var(--muted); line-height:1.55; margin:6px 0}
+  .hist-grid{display:grid; grid-template-columns:repeat(5, 1fr); gap:8px}
+  .ep-tile{
+    aspect-ratio:1; border-radius:18px; border:1px solid var(--hair); background:#fff;
+    cursor:pointer; font-family:inherit; color:var(--ink); padding:4px 2px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  }
+  .ep-tile:active{transform:translateY(1px)}
+  .ep-tile:focus-visible{outline:1.5px solid var(--ink); outline-offset:2px}
+  .ep-num{font-size:clamp(19px, 6vw, 24px); font-weight:800; line-height:1; font-variant-numeric:tabular-nums}
+  .ep-tag{font-size:9.5px; font-weight:700; letter-spacing:.03em; padding:2px 7px; border-radius:999px; white-space:nowrap}
+  .ep-tag.terbit{background:var(--lav); color:var(--c-lav-text)}
+  .ep-tag.stok{background:#F4F1FA; color:var(--ink)}
+  .ep-tag.produksi{background:var(--c-lav); color:#fff}
+  .pager{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:14px}
+  .pager-btn{
+    min-height:44px; padding:10px 18px; border-radius:999px; cursor:pointer; font-family:inherit;
+    font-size:14px; font-weight:700; background:#fff; color:var(--ink); border:1px solid rgba(41,37,36,.18);
+  }
+  .pager-btn:disabled{opacity:.45; cursor:default}
+  .pager-btn:focus-visible{outline:1.5px solid var(--ink); outline-offset:3px}
+  .page-info{font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums}
+  .hist-back{
+    min-height:44px; padding:10px 4px; margin:0 0 6px; background:none; border:0; cursor:pointer;
+    font-family:inherit; font-size:14px; font-weight:700; color:var(--c-lav); text-align:left;
+  }
+  .hist-back:focus-visible{outline:1.5px solid var(--ink); outline-offset:3px; border-radius:8px}
+  .ep-detail .cap{font-size:11.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:0 0 4px}
+  .ep-detail h3{font-size:19px; line-height:1.3; font-weight:700; margin:0 0 10px; overflow-wrap:anywhere}
+  .ep-statusline{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:14px}
+  .ep-statusline .chip{font-size:12px; padding:5px 11px}
+  .hist-note{font-size:13px; color:var(--muted); line-height:1.6; margin:0 0 14px; overflow-wrap:anywhere}
+  .hist-h{font-size:15.5px; font-weight:700; margin:18px 0 10px}
+  .hstage{background:#fff; border:1px solid var(--hair); border-radius:20px; box-shadow:var(--shadow); padding:14px 16px; margin-bottom:10px}
+  .hstage .bar{height:8px; margin-top:12px}
+  .hstage .checks{margin:12px 0 0}
+  .hstage .detail{margin:8px 0 0}
+  .hstage .meta{margin:10px 0 0}
+</style>
+</head>
+<body>
+<div class="blob peach"></div>
+<div class="blob lav"></div>
+<div class="grain"></div>
+<main>
+  <header>
+    <div class="brand">
+      <span class="logo"></span>
+      <span class="wordmark">apa jadinya</span>
+    </div>
+    <button id="historyBtn" type="button" aria-label="Riwayat Episode" title="Riwayat Episode"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/><path d="M1 4v6h6"/><path d="M12 8v4l2.8 1.7"/></svg></button>
+    <h1 id="title">Progres Produksi</h1>
+  </header>
+
+  <section class="hero" aria-label="Progres keseluruhan">
+    <div class="hero-top">
+      <div class="overall"><span id="overall">0</span><small>%</small></div>
+      <div class="active">
+        <p class="cap">Durasi total</p>
+        <p class="dur-val" id="totalDur">…</p>
+        <p class="cap dur-cap">Tahap aktif</p>
+        <p class="stage-name" id="activeStage">Memuat</p>
+      </div>
+    </div>
+    <div class="bar"><div class="fill" id="overallBar" style="width:0%"></div></div>
+    <div class="fresh"><span class="dot" id="freshDot"></span><span id="freshText">Memuat data…</span></div>
+  </section>
+
+  <div class="err" id="err">Koneksi ke data progres terputus. Angka yang tampil adalah data terakhir yang diterima.</div>
+  <div id="stages"><div class="loading">Memuat data produksi…</div></div>
+  <div id="videoCard"></div>
+  <p class="note" id="note"></p>
+  <button id="notifyBtn" type="button" hidden>Aktifkan notifikasi</button>
+  <p class="notify-hint" id="notifyHint" hidden></p>
+  <button id="install" type="button">Pasang ke layar utama</button>
+</main>
+<div class="modal-backdrop" id="histModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="histTitle">
+    <div class="modal-head">
+      <h2 id="histTitle">Riwayat Episode</h2>
+      <button type="button" class="modal-close" id="histClose" aria-label="Tutup riwayat">✕</button>
+    </div>
+    <div id="histBody"><p class="hist-msg">Memuat riwayat…</p></div>
+  </div>
+</div>
+<script>
+  var LABELS = [
+    ["narasi", "Narasi"],
+    ["frame_building", "Frame building"],
+    ["rendering", "Rendering"],
+    ["encode", "Encode"],
+    ["qa", "QA"]
+  ];
+
+  function esc(s){
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+      return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c];
+    });
+  }
+  function pctOf(s){
+    if(!s) return 0;
+    if(typeof s.percent === "number") return Math.max(0, Math.min(100, Math.round(s.percent)));
+    if(typeof s.done === "number" && typeof s.total === "number" && s.total > 0)
+      return Math.round(100 * s.done / s.total);
+    return 0;
+  }
+  function fmt(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+  function fmtDur(sec){
+    sec = Math.max(0, Math.round(sec));
+    var h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+    if(h > 0) return h + " j " + m + " m";
+    if(m > 0) return m + " m " + s + " d";
+    return s + " dtk";
+  }
+
+  var FAM = {narasi: "lav", frame_building: "lav", rendering: "lav", encode: "lav", qa: "lav"};
+  var expandedKey = null, lastCurrentKey = null;
+
+  function stageHtml(key, label, s, isCurrent){
+    s = s || {};
+    var p = pctOf(s), done = p >= 100;
+    var expanded = expandedKey === key;
+    var markCls = done ? " ok" : (isCurrent ? " run" : "");
+    var markTxt = done ? "✓" : (isCurrent ? '<span class="in"></span>' : "");
+    var right;
+    if(done) right = '<span class="done-txt">Selesai</span>';
+    else if(typeof s.done === "number" && typeof s.total === "number")
+      right = fmt(s.done) + "/" + fmt(s.total) + " · <b>" + p + "%</b>";
+    else right = "<b>" + p + "%</b>";
+    var meta = "";
+    if(s.machine || s.duration_label || typeof s.duration_sec === "number" || s.started_at){
+      var chip = "";
+      if(s.machine){
+        var vps = String(s.machine).toLowerCase().indexOf("vps") !== -1;
+        chip = '<span class="chip' + (vps ? " vps" : "") + '">' + esc(s.machine) + "</span>";
+      }
+      var dur = "";
+      if(done && typeof s.duration_sec === "number") dur = "Durasi " + fmtDur(s.duration_sec);
+      else if(done && s.duration_label) dur = esc(s.duration_label);
+      else if(done && s.started_at && s.finished_at){
+        var da = Date.parse(s.started_at), db = Date.parse(s.finished_at);
+        if(!isNaN(da) && !isNaN(db)) dur = "Durasi " + fmtDur((db - da) / 1000);
+      }
+      else if(!done && s.started_at) dur = 'Berjalan · <span data-elapsed="' + esc(s.started_at) + '">…</span>' +
+        ((typeof s.duration_sec === "number" && s.duration_sec > 0) ? " · putaran lalu " + fmtDur(s.duration_sec) : "");
+      else if(!done && typeof s.duration_sec === "number") dur = "Berjalan · " + fmtDur(s.duration_sec);
+      meta = '<div class="meta">' + chip + (dur ? '<span class="dur">' + dur + "</span>" : "") + "</div>";
+    }
+    var expand = "";
+    if(expanded){
+      var inner = "";
+      var items = Array.isArray(s.done_items) ? s.done_items : [];
+      if(items.length){
+        if(!done) inner += '<div class="cap">Riwayat selesai</div>';
+        inner += '<ul class="checks">' + items.map(function(it){
+          return '<li><span class="tick">✓</span><span>' + esc(it) + "</span></li>";
+        }).join("") + "</ul>";
+      }
+      if(s.detail){
+        if(!done) inner += '<div class="cap">Sedang berjalan</div>';
+        inner += '<div class="detail">' + esc(s.detail) + "</div>";
+      }
+      if(!inner) inner = '<div class="empty-line">Belum ada pekerjaan yang selesai di tahap ini.</div>';
+      expand = '<div id="exp-' + key + '">' + inner + "</div>";
+    }
+    return '<li class="stage fam-' + (FAM[key] || "sage") + (isCurrent && !done ? " current" : "") + '" data-key="' + key + '">' +
+      '<button type="button" class="stage-head" data-toggle="' + key + '" aria-expanded="' +
+      (expanded ? "true" : "false") + '" aria-controls="exp-' + key + '">' +
+      '<span class="row"><span class="left"><span class="mark' + markCls + '">' + markTxt +
+      '</span><span class="name">' + label + "</span></span>" +
+      '<span class="val">' + right + "</span></span>" +
+      '<span class="chev' + (expanded ? " open" : "") + '" aria-hidden="true">▾</span></button>' +
+      meta + expand +
+      '<div class="bar"><div class="fill' + '" style="width:' + p + '%"></div></div></li>';
+  }
+
+  var prog = null, lastTs = null, lastLabel = "";
+
+  function noDash(s){ return String(s == null ? "" : s).replace(/\s*[—–]\s*/g, " · "); }
+
+  function renderAll(){
+    if(!prog) return;
+    document.getElementById("title").textContent = noDash(prog.title) || "Progres Produksi";
+    if(prog.updated_at){ var t = Date.parse(prog.updated_at); if(!isNaN(t)) lastTs = t; }
+    lastLabel = prog.updated_label || "";
+    var stages = prog.stages || {};
+    var total = 0;
+    var percents = LABELS.map(function(pair){ var p = pctOf(stages[pair[0]]); total += p; return p; });
+    var currentIdx = -1;
+    for(var i = 0; i < percents.length; i++){ if(percents[i] < 100){ currentIdx = i; break; } }
+    var curKey = currentIdx >= 0 ? LABELS[currentIdx][0] : null;
+    if(curKey !== lastCurrentKey){
+      if(curKey) expandedKey = curKey;
+      lastCurrentKey = curKey;
+    }
+    var overall = Math.round(total / LABELS.length);
+    document.getElementById("overall").textContent = overall;
+    var bar = document.getElementById("overallBar");
+    bar.style.width = overall + "%";
+    document.getElementById("activeStage").textContent =
+      currentIdx >= 0 ? LABELS[currentIdx][1] : (prog.finished_at ? "Selesai" : "Checklist selesai, produksi berlanjut");
+    if(prog.title && prog.started_at){
+      try{
+        var epKey = prog.title + "|" + prog.started_at;
+        var epSeen = localStorage.getItem("epseen");
+        if(epSeen && epSeen !== epKey){
+          if("Notification" in window && Notification.permission === "granted" && navigator.serviceWorker){
+            navigator.serviceWorker.ready.then(function(reg){
+              reg.showNotification("Episode baru dimulai", {
+                body: noDash(prog.title) + ". Produksi sudah berjalan, buka papan untuk melihat progresnya.",
+                icon: "icons/icon-192.png", tag: "progres-episode-baru"
+              });
+            });
+          }
+        }
+        if(epSeen !== epKey) localStorage.setItem("epseen", epKey);
+      }catch(e){}
+    }
+    window._finished = (currentIdx === -1 && !!prog.stages && !!prog.finished_at);
+    if(window._finished && prog.finished_at){
+      var nkey = "notified:" + prog.finished_at;
+      try{
+        if(localStorage.getItem(nkey) !== "1"){
+          localStorage.setItem(nkey, "1");
+          if("Notification" in window && Notification.permission === "granted" && navigator.serviceWorker){
+            navigator.serviceWorker.ready.then(function(reg){
+              reg.showNotification("Produksi selesai", {
+                body: (noDash(prog.title) || "Episode") + " tuntas" +
+                  (prog.total_label ? " · total durasi " + prog.total_label : "") + ".",
+                icon: "icons/icon-192.png", tag: "progres-selesai"
+              });
+            });
+          }
+        }
+      }catch(e){}
+    }
+    if(window._finished){
+      var tot = prog.total_label || "";
+      if(!tot && prog.started_at && prog.finished_at){
+        var a = Date.parse(prog.started_at), b = Date.parse(prog.finished_at);
+        if(!isNaN(a) && !isNaN(b)) tot = fmtDur((b - a) / 1000);
+      }
+      var finTxt = "";
+      if(prog.finished_at){
+        var ft = Date.parse(prog.finished_at);
+        if(!isNaN(ft)) finTxt = " · tuntas " + new Date(ft).toLocaleTimeString("id-ID", {hour: "2-digit", minute: "2-digit"}) + " WIB";
+      }
+      window._finishedText = "Produksi selesai" + (tot ? " · total durasi " + tot : "") + finTxt;
+    }
+    if(prog.stages){
+      var html = '<ul class="stages">';
+      LABELS.forEach(function(pair, i){ html += stageHtml(pair[0], pair[1], stages[pair[0]], i === currentIdx); });
+      html += "</ul>";
+      document.getElementById("stages").innerHTML = html;
+    }
+    document.getElementById("note").textContent = noDash(prog.note);
+    var links = prog.links || {};
+    var PLAT = [["youtube", "YouTube"], ["tiktok", "TikTok"], ["instagram", "Instagram"], ["drive", "Google Drive"]];
+    var btns = "";
+    if(links.v1) btns += '<a class="vbtn master" href="' + esc(links.v1) + '" target="_blank" rel="noopener">Lihat video V1 · Pipa Lama</a>';
+    if(links.v2) btns += '<a class="vbtn master" href="' + esc(links.v2) + '" target="_blank" rel="noopener">Lihat video V2 · Remotion</a>';
+    if(links.master && !links.v1 && !links.v2) btns += '<a class="vbtn master" href="' + esc(links.master) + '" target="_blank" rel="noopener">Lihat video master</a>';
+    PLAT.forEach(function(pl){
+      if(links[pl[0]]) btns += '<a class="vbtn plat" href="' + esc(links[pl[0]]) + '" target="_blank" rel="noopener">Lihat di ' + pl[1] + "</a>";
+    });
+    document.getElementById("videoCard").innerHTML = btns ?
+      '<section class="video-card"><h2>Video</h2><p class="sub">Hasil produksi episode ini.</p><div class="vbtns">' + btns + "</div></section>" : "";
+    document.getElementById("err").style.display = "none";
+  }
+
+  function load(){
+    fetch("https://czvshkgrfyrhmiwydtwt.supabase.co/storage/v1/object/public/progres/progress.json?t=" + Date.now(), {cache: "no-store"})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(d){ prog = d; renderAll(); })
+      .catch(function(){ document.getElementById("err").style.display = "block"; });
+  }
+  load();
+  setInterval(load, 3000);
+
+  setInterval(function(){
+    var dot = document.getElementById("freshDot"), txt = document.getElementById("freshText");
+    var durEl = document.getElementById("totalDur");
+    if(prog && prog.started_at && durEl){
+      var st = Date.parse(prog.started_at);
+      if(!isNaN(st)){
+        var end = Date.now();
+        if(window._finished && prog.finished_at){
+          var ft2 = Date.parse(prog.finished_at);
+          if(!isNaN(ft2)) end = ft2;
+        }
+        durEl.textContent = fmtDur((end - st) / 1000);
+      }
+    }
+    if(window._finished){
+      dot.className = "dot";
+      txt.textContent = window._finishedText || "Produksi selesai";
+      return;
+    }
+    if(!lastTs){ txt.textContent = "Memuat data…"; return; }
+    var s = Math.max(0, Math.round((Date.now() - lastTs) / 1000));
+    txt.textContent = "Data produksi ditulis " + s + " detik lalu" + (lastLabel ? " · " + lastLabel : "");
+    dot.className = "dot" + (s > 60 ? " stale" : (s > 15 ? " warn" : ""));
+    var els = document.querySelectorAll("[data-elapsed]");
+    for(var i = 0; i < els.length; i++){
+      var st = Date.parse(els[i].getAttribute("data-elapsed"));
+      if(!isNaN(st)) els[i].textContent = fmtDur((Date.now() - st) / 1000);
+    }
+  }, 1000);
+
+  document.getElementById("stages").addEventListener("click", function(e){
+    var li = e.target.closest ? e.target.closest(".stage") : null;
+    if(!li) return;
+    var k = li.getAttribute("data-key");
+    if(!k) return;
+    expandedKey = (expandedKey === k) ? null : k;
+    renderAll();
+  });
+
+  var notifyBtn = document.getElementById("notifyBtn"), notifyHint = document.getElementById("notifyHint");
+  function refreshNotifyUI(){
+    if(!("Notification" in window)){ notifyBtn.hidden = true; notifyHint.hidden = true; return; }
+    if(Notification.permission === "default"){ notifyBtn.hidden = false; notifyHint.hidden = true; }
+    else if(Notification.permission === "denied"){
+      notifyBtn.hidden = true; notifyHint.hidden = false;
+      notifyHint.textContent = "Notifikasi sedang diblokir. Aktifkan dari pengaturan browser untuk situs ini bila ingin dipakai.";
+    } else {
+      notifyBtn.hidden = true; notifyHint.hidden = false;
+      notifyHint.textContent = "Notifikasi aktif. Kamu akan diberi tahu saat episode berganti dan saat produksi benar-benar tuntas.";
+    }
+  }
+  notifyBtn.addEventListener("click", function(){
+    Notification.requestPermission().then(refreshNotifyUI).catch(refreshNotifyUI);
+  });
+  refreshNotifyUI();
+
+  if("serviceWorker" in navigator){
+    var hadController = !!navigator.serviceWorker.controller, reloaded = false;
+    navigator.serviceWorker.addEventListener("controllerchange", function(){
+      if(hadController && !reloaded){ reloaded = true; location.reload(); }
+    });
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  }
+  var deferredPrompt = null;
+  window.addEventListener("beforeinstallprompt", function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById("install").style.display = "block";
+  });
+  document.getElementById("install").addEventListener("click", function(){
+    if(!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function(){ deferredPrompt = null; });
+    document.getElementById("install").style.display = "none";
+  });
+
+  // ---- Riwayat episode: grid nomor 5x5 berpaging + detail baca-saja ----
+  var histData = null, histPage = 0, histDetailN = null, histLastFocus = null;
+  var histModal = document.getElementById("histModal"), histBody = document.getElementById("histBody");
+  var PER_PAGE = 25;
+  var STAGE_LABEL = {};
+  LABELS.forEach(function(pair){ STAGE_LABEL[pair[0]] = pair[1]; });
+
+  function histStatusCls(st){
+    if(st === "Terbit") return "terbit";
+    if(st === "Stok") return "stok";
+    return "produksi";
+  }
+  function histFind(n){
+    if(!histData) return null;
+    for(var i = 0; i < histData.length; i++) if(histData[i].n === n) return histData[i];
+    return null;
+  }
+  function renderHistGrid(){
+    var total = histData.length;
+    var pages = Math.max(1, Math.ceil(total / PER_PAGE));
+    if(histPage >= pages) histPage = pages - 1;
+    var start = histPage * PER_PAGE;
+    var html = '<div class="hist-grid">';
+    for(var i = start; i < Math.min(start + PER_PAGE, total); i++){
+      var ep = histData[i];
+      html += '<button type="button" class="ep-tile" data-ep="' + ep.n + '" aria-label="Episode ' + ep.n + ', ' + esc(ep.status) + '">' +
+        '<span class="ep-num">' + ep.n + '</span>' +
+        '<span class="ep-tag ' + histStatusCls(ep.status) + '">' + esc(ep.status) + "</span></button>";
+    }
+    html += "</div>";
+    if(pages > 1){
+      html += '<div class="pager">' +
+        '<button type="button" class="pager-btn" data-page="-1"' + (histPage <= 0 ? " disabled" : "") + ">Sebelumnya</button>" +
+        '<span class="page-info">Halaman ' + (histPage + 1) + " dari " + pages + "</span>" +
+        '<button type="button" class="pager-btn" data-page="1"' + (histPage >= pages - 1 ? " disabled" : "") + ">Berikutnya</button></div>";
+    }
+    histBody.innerHTML = html;
+  }
+  function histStageHtml(s){
+    var p = pctOf(s), done = p >= 100 || s.status === "done";
+    var right;
+    if(done) right = '<span class="done-txt">Selesai</span>';
+    else if(typeof s.done === "number" && typeof s.total === "number")
+      right = fmt(s.done) + "/" + fmt(s.total) + " · <b>" + p + "%</b>";
+    else right = "<b>" + p + "%</b>";
+    var meta = "";
+    if(s.machine || typeof s.duration_sec === "number"){
+      var chip = "";
+      if(s.machine){
+        var vps = String(s.machine).toLowerCase().indexOf("vps") !== -1;
+        chip = '<span class="chip' + (vps ? " vps" : "") + '">' + esc(s.machine) + "</span>";
+      }
+      var dur = (typeof s.duration_sec === "number") ? '<span class="dur">Durasi ' + fmtDur(s.duration_sec) + "</span>" : "";
+      meta = '<div class="meta">' + chip + dur + "</div>";
+    }
+    var inner = "";
+    var items = Array.isArray(s.done_items) ? s.done_items : [];
+    if(items.length){
+      inner += '<ul class="checks">' + items.map(function(it){
+        return '<li><span class="tick">✓</span><span>' + esc(noDash(it)) + "</span></li>";
+      }).join("") + "</ul>";
+    }
+    if(s.detail) inner += '<div class="detail">' + esc(noDash(s.detail)) + "</div>";
+    return '<div class="hstage"><div class="row"><span class="left">' +
+      '<span class="mark' + (done ? " ok" : "") + '">' + (done ? "✓" : "") + '</span>' +
+      '<span class="name">' + esc(STAGE_LABEL[s.key] || s.key) + '</span></span>' +
+      '<span class="val">' + right + "</span></div>" + meta + inner +
+      '<div class="bar"><div class="fill" style="width:' + p + '%"></div></div></div>';
+  }
+  function renderHistDetail(ep){
+    var links = ep.links || {};
+    var html = '<div class="ep-detail">' +
+      '<button type="button" class="hist-back" data-back="1">‹ Kembali ke daftar episode</button>' +
+      '<p class="cap">Episode ' + ep.n + '</p><h3>' + esc(noDash(ep.title || "")) + "</h3>" +
+      '<div class="ep-statusline"><span class="ep-tag ' + histStatusCls(ep.status) + '">' + esc(ep.status) + "</span>" +
+      (ep.duration_label ? '<span class="chip">Durasi produksi ' + esc(ep.duration_label) + "</span>" : "") + "</div>";
+    var btns = "";
+    if(links.master) btns += '<a class="vbtn master" href="' + esc(links.master) + '" target="_blank" rel="noopener">Lihat video master</a>';
+    [["youtube", "YouTube"], ["tiktok", "TikTok"], ["instagram", "Instagram"], ["drive", "Google Drive"]].forEach(function(pl){
+      if(links[pl[0]]) btns += '<a class="vbtn plat" href="' + esc(links[pl[0]]) + '" target="_blank" rel="noopener">Lihat di ' + pl[1] + "</a>";
+    });
+    if(btns) html += '<div class="vbtns">' + btns + "</div>";
+    html += '<h4 class="hist-h">Kartu progres produksi</h4>';
+    if(ep.stage_note) html += '<p class="hist-note">' + esc(noDash(ep.stage_note)) + "</p>";
+    if(Array.isArray(ep.stages) && ep.stages.length){
+      ep.stages.forEach(function(s){ html += histStageHtml(s); });
+    } else {
+      html += '<p class="hist-note">Kartu progres episode ini tidak tercatat. Episode ini selesai sebelum papan progres dipakai mencatat tahap produksi, jadi rincian tahapnya memang tidak tersimpan.</p>';
+    }
+    html += "</div>";
+    histBody.innerHTML = html;
+    histBody.scrollTop = 0;
+    var m = histModal.querySelector(".modal"); if(m) m.scrollTop = 0;
+  }
+  function loadHist(){
+    histBody.innerHTML = '<p class="hist-msg">Memuat riwayat…</p>';
+    fetch("https://czvshkgrfyrhmiwydtwt.supabase.co/storage/v1/object/public/progres/history.json?t=" + Date.now(), {cache: "no-store"})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(d){
+        histData = (d && Array.isArray(d.episodes)) ? d.episodes : [];
+        if(!histData.length){ histBody.innerHTML = '<p class="hist-msg">Belum ada episode yang tercatat di riwayat.</p>'; return; }
+        renderHistGrid();
+      })
+      .catch(function(){
+        histBody.innerHTML = '<p class="hist-msg">Riwayat belum bisa dimuat. Periksa koneksi lalu coba lagi.</p>' +
+          '<div class="vbtns"><button type="button" class="vbtn plat" data-retry="1" style="width:100%; cursor:pointer; font-family:inherit">Coba lagi</button></div>';
+      });
+  }
+  function openHist(){
+    histLastFocus = document.activeElement;
+    histModal.hidden = false;
+    document.body.style.overflow = "hidden";
+    document.getElementById("histClose").focus();
+    if(histDetailN != null && histData){ var ep = histFind(histDetailN); if(ep){ renderHistDetail(ep); return; } }
+    if(histData) renderHistGrid(); else loadHist();
+  }
+  function closeHist(){
+    histModal.hidden = true;
+    document.body.style.overflow = "";
+    if(histLastFocus && histLastFocus.focus) histLastFocus.focus();
+  }
+  document.getElementById("historyBtn").addEventListener("click", openHist);
+  document.getElementById("histClose").addEventListener("click", closeHist);
+  histModal.addEventListener("click", function(e){ if(e.target === histModal) closeHist(); });
+  document.addEventListener("keydown", function(e){
+    if(!histModal.hidden && (e.key === "Escape" || e.key === "Esc")) closeHist();
+  });
+  histBody.addEventListener("click", function(e){
+    var t = e.target.closest ? e.target.closest("[data-ep],[data-page],[data-back],[data-retry]") : null;
+    if(!t) return;
+    if(t.hasAttribute("data-retry")){ loadHist(); return; }
+    if(t.hasAttribute("data-back")){ histDetailN = null; renderHistGrid(); return; }
+    if(t.hasAttribute("data-page")){
+      if(t.disabled) return;
+      histPage += parseInt(t.getAttribute("data-page"), 10);
+      renderHistGrid(); return;
+    }
+    var n = parseInt(t.getAttribute("data-ep"), 10);
+    var ep = histFind(n);
+    if(ep){ histDetailN = n; renderHistDetail(ep); }
+  });
+</script>
+</body>
+</html>
